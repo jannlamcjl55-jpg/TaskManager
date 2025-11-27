@@ -1,0 +1,72 @@
+﻿@model TaskManager.Models.RegisterViewModel;
+
+<h1>會員注冊</h1>
+@Html.ValidationSummary()
+<form asp-action="Register" method="post">
+    <div>
+        <label asp-for="Name" class="control-label">姓名:</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" style="color:red"></span>
+    </div>
+    <div>
+        <label asp-for="Email" class="control-label">郵箱:</label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" style="color:red"></span>
+    </div>
+    <div>
+        <label asp-for="Password" class="control-label">密碼</label>
+        <input asp-for="Password" type="password" class="form-control" />
+        <span asp-validation-for="Password" style="color:red"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">注冊</button>
+</form>
+
+@section Scripts
+{
+@{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+<script>
+    // 🔹 加上即時樣式提示
+    $(function () {
+        $('form').on('blur change keyup', 'input', function () {
+            const $input = $(this);
+            const hasError = $input.hasClass('input-validation-error');
+
+            if (hasError) {
+                $input.addClass('is-invalid').removeClass('is-valid');
+            } else {
+                $input.addClass('is-valid').removeClass('is-invalid');
+            }
+        });
+    });
+</script>
+
+<style>
+    /* 🔹 錯誤時紅框、正確時綠框 */
+    .is-invalid {
+        border: 2px solid #dc3545 !important;
+        background-color: #fff5f5;
+    }
+
+    .is-valid {
+        border: 2px solid #198754 !important;
+        background-color: #f6fff8;
+    }
+
+    /* 🔹 錯誤訊息紅色 */
+    .text-danger {
+        color: #dc3545;
+        font-size: 0.9em;
+    }
+
+    /* 🔹 表單整體美化 */
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    form {
+        width: 300px;
+    }
+</style>

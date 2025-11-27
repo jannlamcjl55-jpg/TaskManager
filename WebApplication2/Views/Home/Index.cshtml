@@ -1,0 +1,239 @@
+﻿@* @{
+	//Layout = "";
+}
+
+@{
+	ViewData["Title"] = "Alvin Teacher";
+}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+
+	<meta charset="UTF-8">
+
+	<title>MVC-AJAX</title>
+
+	<style>
+		@@import url(http://fonts.googleapis.com/css?family=Exo:100,200,400);
+		@@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:700,400,300);
+
+		body {
+			margin: 0;
+			padding: 0;
+			background: #fff;
+			color: #fff;
+			font-family: Arial;
+			font-size: 12px;
+		}
+
+		.body {
+			position: absolute;
+			top: -20px;
+			left: -20px;
+			right: -40px;
+			bottom: -40px;
+			width: auto;
+			height: auto;
+			background-image: url(https://static.vecteezy.com/system/resources/thumbnails/007/164/537/small/fingerprint-identity-sensor-data-protection-system-podium-hologram-blue-light-and-concept-free-vector.jpg);
+			background-size: cover;
+			-webkit-filter: blur(5px);
+			z-index: 0;
+		}
+
+		.grad {
+			position: absolute;
+			top: -20px;
+			left: -20px;
+			right: -40px;
+			bottom: -40px;
+			width: auto;
+			height: auto;
+			background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.65))); /* Chrome,Safari4+ */
+			z-index: 1;
+			opacity: 0.7;
+		}
+
+		.header {
+			position: absolute;
+			top: calc(50% - 35px);
+			left: calc(50% - 255px);
+			z-index: 2;
+		}
+
+			.header div {
+				float: left;
+				color: #fff;
+				font-family: 'Exo', sans-serif;
+				font-size: 35px;
+				font-weight: 200;
+			}
+
+				.header div span {
+					color: #5379fa !important;
+				}
+
+		.login {
+			position: absolute;
+			top: calc(50% - 75px);
+			left: calc(50% - 50px);
+			height: 150px;
+			width: 350px;
+			padding: 10px;
+			z-index: 2;
+		}
+
+			.login input[type=text] {
+				width: 250px;
+				height: 30px;
+				background: transparent;
+				border: 1px solid rgba(255,255,255,0.6);
+				border-radius: 2px;
+				color: #fff;
+				font-family: 'Exo', sans-serif;
+				font-size: 16px;
+				font-weight: 400;
+				padding: 4px;
+			}
+
+			.login input[type=password] {
+				width: 250px;
+				height: 30px;
+				background: transparent;
+				border: 1px solid rgba(255,255,255,0.6);
+				border-radius: 2px;
+				color: #fff;
+				font-family: 'Exo', sans-serif;
+				font-size: 16px;
+				font-weight: 400;
+				padding: 4px;
+				margin-top: 10px;
+			}
+
+			.login input[type=button] {
+				width: 260px;
+				height: 35px;
+				background: #fff;
+				border: 1px solid #fff;
+				cursor: pointer;
+				border-radius: 2px;
+				color: #a18d6c;
+				font-family: 'Exo', sans-serif;
+				font-size: 16px;
+				font-weight: 400;
+				padding: 6px;
+				margin-top: 10px;
+			}
+
+				.login input[type=button]:hover {
+					opacity: 0.8;
+				}
+
+				.login input[type=button]:active {
+					opacity: 0.6;
+				}
+
+			.login input[type=text]:focus {
+				outline: none;
+				border: 1px solid rgba(255,255,255,0.9);
+			}
+
+			.login input[type=password]:focus {
+				outline: none;
+				border: 1px solid rgba(255,255,255,0.9);
+			}
+
+			.login input[type=button]:focus {
+				outline: none;
+			}
+
+		::-webkit-input-placeholder {
+			color: rgba(255,255,255,0.6);
+		}
+
+		::-moz-input-placeholder {
+			color: rgba(255,255,255,0.6);
+		}
+	</style>
+
+	<script src="~/js/prefixfree.min.js"></script>
+	<script src='https://code.jquery.com/jquery-3.7.1.min.js'></script>
+
+</head>
+
+<body>
+
+	<div class="body"></div>
+	<div class="grad"></div>
+	<div class="header">
+		<div><span>MVC-AJAX</span></div>
+	</div>
+	<br>
+	<div class="login">
+		<input type="text" id="datepicker">
+	</div>
+
+	<script>
+		$("#datepicker").on("change", function () {
+			alert($(this).val());
+			var dataValue = { name: 'person', isGoing: 'true', returnAddress: 'returnEmail', value:$(this).val() };
+			$.ajax({
+				type: "POST",
+				url: "/Home/OnSubmit",
+				data: dataValue,
+				//contentType: 'application/json; charset=utf-8',
+				dataType: 'json',
+				error: function (XMLHttpRequest, textStatus, errorThrown) {
+					alert("Request: " + XMLHttpRequest.toString() + "\n\nStatus: " + textStatus + "\n\nError: " + errorThrown);
+				},
+				success: function (result) {
+					alert("We returned: " + result);
+				}
+			});
+		});
+	</script>
+
+
+</body>
+
+</html>
+ *@
+
+
+
+@model List<TaskManager.Models.TaskItem>
+
+@{
+    ViewData["Title"] = "任務列表";
+}
+
+<h1>任務列表</h1>
+<a class="btn btn-primary" asp-action="Create">新增任務</a>
+<table class="table mt-3">
+    <thead>
+        <tr>
+            <th>名稱</th>
+            <th>描述</th>
+            <th>截止日期</th>
+            <th>完成</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var task in Model)
+        {
+            <tr>
+                <td>@task.Title</td>
+                <td>@task.Description</td>
+                <td>@task.DueDate.ToShortDateString()</td>
+                <td>@(task.IsComplete ? "完成" : "未完成")</td>
+                <td>
+                    <a class="btn btn-sm btn-info" asp-action="Edit" asp-route-id="@task.Id">編輯</a>
+                    <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@task.Id">刪除</a>
+                    <a class="btn btn-sm btn-secondary" asp-action="Details" asp-route-id="@task.Id">詳情</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

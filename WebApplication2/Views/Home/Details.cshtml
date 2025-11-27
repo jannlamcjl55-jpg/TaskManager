@@ -1,0 +1,10 @@
+﻿@model TaskItem
+
+<h2>任務詳情</h2>
+
+<p>標題：@Model.Title</p>
+<p>描述：@Model.Description</p>
+<p>截止日期：@Model.DueDate</p>
+<p>完成：@(Model.IsComplete ? "是" : "否")</p>
+
+<a asp-action="Index" class="btn btn-secondary">返回</a>

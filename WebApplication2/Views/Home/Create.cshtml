@@ -1,0 +1,26 @@
+﻿@model TaskItem
+
+<h2>新增任務</h2>
+
+<form asp-action="Create" method="post">
+    <label>標題</label>
+    <input asp-for="Title" class="form-control" />
+    <span asp-validation-for="Title" class="text-danger"></span>
+
+    <label>描述</label>
+    <textarea asp-for="Description" class="form-control"></textarea>
+    <span asp-validation-for="Description" class="text-danger"></span>
+
+    <label>截止日期</label>
+    <input asp-for="DueDate" type="date" class="form-control" />
+
+    <label>是否完成</label>
+    <input asp-for="IsComplete" type="checkbox" />
+    <span asp-validation-for="IsComplete" class="text-danger"/>
+
+    <button class="btn btn-primary mt-3">新增</button>
+</form>
+@section Scripts
+{
+         @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

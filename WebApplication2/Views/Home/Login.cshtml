@@ -1,0 +1,73 @@
+﻿@model TaskManager.Models.LoginViewModel;
+@{
+    ViewData["Title"] = "會員登入";
+}
+
+<h2>@ViewData["Title"]</h2>
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+<form asp-action="Login" method="post" novalidate>
+    <div class="form-group">
+        <label asp-for="Email" class="control-label"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Password" class="control-label"></label>
+        <input asp-for="Password" class="form-control" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">登入</button>
+</form>
+
+@section Scripts {
+    @* 啟用即時驗證功能 *@
+@{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        // 🔹 加上即時樣式提示
+        $(function () {
+            $('form').on('blur change keyup', 'input', function () {
+                const $input = $(this);
+                const hasError = $input.hasClass('input-validation-error');
+
+                if (hasError) {
+                    $input.addClass('is-invalid').removeClass('is-valid');
+                } else {
+                    $input.addClass('is-valid').removeClass('is-invalid');
+                }
+            });
+        });
+    </script>
+
+    <style>
+        /* 🔹 錯誤時紅框、正確時綠框 */
+        .is-invalid {
+            border: 2px solid #dc3545 !important;
+            background-color: #fff5f5;
+        }
+
+        .is-valid {
+            border: 2px solid #198754 !important;
+            background-color: #f6fff8;
+        }
+
+        /* 🔹 錯誤訊息紅色 */
+        .text-danger {
+            color: #dc3545;
+            font-size: 0.9em;
+        }
+
+        /* 🔹 表單整體美化 */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        form {
+            width: 300px;
+        }
+    </style>
+}
